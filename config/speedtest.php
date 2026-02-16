@@ -2,6 +2,17 @@
 
 use Carbon\Carbon;
 
+$legacyConnectivityUrl = env('SPEEDTEST_CHECKINTERNET_URL');
+$preflightUrl = env('SPEEDTEST_EXTERNAL_IP_URL', $legacyConnectivityUrl ?: 'http://connectivitycheck.gstatic.com/generate_204');
+$preflightHostname = env('SPEEDTEST_INTERNET_CHECK_HOSTNAME');
+
+if ($preflightHostname === null || $preflightHostname === '') {
+    $derivedHostname = parse_url((string) $preflightUrl, PHP_URL_HOST);
+    $preflightHostname = is_string($derivedHostname) && $derivedHostname !== ''
+        ? $derivedHostname
+        : '1.1.1.1';
+}
+
 return [
     /**
      * General settings.
@@ -18,6 +29,8 @@ return [
 
     'default_chart_range' => strtolower(env('DEFAULT_CHART_RANGE', '24h')),
 
+    'service' => strtolower(env('SPEEDTEST_SERVICE', 'ookla')),
+
     /**
      * Speedtest settings.
      */
@@ -29,9 +42,17 @@ return [
 
     'interface' => env('SPEEDTEST_INTERFACE'),
 
+    'iperf3' => [
+        'host' => env('IPERF3_HOST'),
+        'port' => (int) env('IPERF3_PORT', 5201),
+        'duration' => (int) env('IPERF3_DURATION', 10),
+        'parallel' => (int) env('IPERF3_PARALLEL', 1),
+        'bind' => env('IPERF3_BIND'),
+    ],
+
     'preflight' => [
-        'external_ip_url' => env('SPEEDTEST_CHECKINTERNET_URL') ?? env('SPEEDTEST_EXTERNAL_IP_URL', 'https://icanhazip.com'),
-        'internet_check_hostname' => env('SPEEDTEST_CHECKINTERNET_URL') ?? env('SPEEDTEST_INTERNET_CHECK_HOSTNAME', 'icanhazip.com'),
+        'external_ip_url' => $preflightUrl,
+        'internet_check_hostname' => $preflightHostname,
         'skip_ips' => env('SPEEDTEST_SKIP_IPS'),
     ],
 

@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-use App\Actions\Ookla\RunSpeedtest;
 use Cron\CronExpression;
 use Lorisleiva\Actions\Concerns\AsAction;
 

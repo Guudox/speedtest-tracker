@@ -241,7 +241,7 @@ class ResultTable
                         ->label(__('results.view_on_speedtest_net'))
                         ->icon('heroicon-o-link')
                         ->url(fn (Result $record): ?string => $record->result_url)
-                        ->hidden(fn (Result $record): bool => $record->status !== ResultStatus::Completed)
+                        ->hidden(fn (Result $record): bool => $record->status !== ResultStatus::Completed || blank($record->result_url))
                         ->openUrlInNewTab(),
                     Action::make('updateComments')
                         ->label(__('results.update_comments'))

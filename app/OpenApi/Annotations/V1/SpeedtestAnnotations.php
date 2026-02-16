@@ -13,15 +13,36 @@ class SpeedtestAnnotations
 {
     #[OA\Post(
         path: '/api/v1/speedtests/run',
-        summary: 'Run a new Ookla speedtest',
+        summary: 'Run a new speedtest',
         operationId: 'runSpeedtest',
         tags: ['Speedtests'],
         parameters: [
             new OA\Parameter(ref: '#/components/parameters/AcceptHeader'),
             new OA\Parameter(
+                name: 'service',
+                in: 'query',
+                description: 'Speedtest service to run. Defaults to configured service.',
+                required: false,
+                schema: new OA\Schema(type: 'string', enum: ['ookla', 'iperf3'])
+            ),
+            new OA\Parameter(
                 name: 'server_id',
                 in: 'query',
-                description: 'Optional Ookla speedtest server ID',
+                description: 'Optional Ookla speedtest server ID (Ookla only)',
+                required: false,
+                schema: new OA\Schema(type: 'integer')
+            ),
+            new OA\Parameter(
+                name: 'host',
+                in: 'query',
+                description: 'Optional iperf3 server hostname or IP address',
+                required: false,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'port',
+                in: 'query',
+                description: 'Optional iperf3 server port',
                 required: false,
                 schema: new OA\Schema(type: 'integer')
             ),

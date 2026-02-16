@@ -34,6 +34,9 @@ use OpenApi\Attributes as OA;
                             type: 'object',
                             properties: [
                                 new OA\Property(property: 'id', type: 'integer', nullable: true),
+                                new OA\Property(property: 'name', type: 'string', nullable: true),
+                                new OA\Property(property: 'host', type: 'string', nullable: true),
+                                new OA\Property(property: 'port', type: 'integer', nullable: true),
                             ]
                         ),
                     ]

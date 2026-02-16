@@ -2,6 +2,7 @@
 
 namespace App\Filament\Tables\Columns;
 
+use App\Enums\ResultService;
 use Filament\Tables\Columns\Column;
 
 class ResultServerColumn extends Column
@@ -24,5 +25,10 @@ class ResultServerColumn extends Column
         $this->serverId = $this->record->server_id;
 
         return $this->serverId;
+    }
+
+    public function shouldShowServerId(): bool
+    {
+        return $this->record->service === ResultService::Ookla;
     }
 }

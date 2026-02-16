@@ -16,6 +16,8 @@ return [
     // Service enum values
     'service' => [
         'faker' => 'Faker',
+        'iperf3' => 'iPerf3',
+        'librespeed' => 'LibreSpeed',
         'ookla' => 'Ookla',
     ],
 ];
